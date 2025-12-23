@@ -1,0 +1,227 @@
+html
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <title>LAIN</title>
+    
+    <style>
+        /* ================================================= */
+        /* CSS GERAL E LAYOUT PRINCIPAL (Estilo Anos 90)    */
+        /* ================================================= */
+        body {
+            background-image: url('lain_by_dreamingusagi_d1akp9u-414w-2x.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-color: #000000;
+            font-family: "Comic Sans MS", cursive;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7); 
+            margin: 50px auto;
+            padding: 20px;
+            max-width: 600px;
+            border: 3px double #ff00ff;
+        }
+
+        h1 {
+            color: #ff00ff;
+        }
+
+        /* ================================================= */
+        /* CSS DOS BOTÕES PRINCIPAIS [ Músicas ] [ Imagem ] */
+        /* ================================================= */
+        .menu-lista {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .btn-galeria, .btn-musica {
+            background-color: #800080;
+            border: 3px outset #ff00ff;
+            padding: 5px 10px;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px black;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .btn-galeria:active, .btn-musica:active {
+            border: 3px inset #ff00ff;
+            box-shadow: 2px 2px 0px black;
+        }
+
+        /* ================================================= */
+        /* CSS DAS CAIXAS POP-UP (Galeria e Músicas)       */
+        /* ================================================= */
+        #minha-foto, #menu-musica {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 105, 180, 0.9);
+            border: 3px double #ff00ff;
+            padding: 20px;
+            z-index: 1000;
+            width: 80%;
+            max-width: 400px;
+            overflow-y: auto;
+            max-height: 80vh; 
+        }
+
+        #minha-foto:target {
+            display: block;
+        }
+        
+        /* Estilo para os links da playlist */
+        .playlist-item {
+            display: block;
+            padding: 5px;
+            color: black;
+            text-decoration: none;
+        }
+        .playlist-item:hover {
+            background-color: #ff00ff;
+            color: white;
+        }
+        
+    </style>
+</head>
+<body>
+    
+    <!-- ================================================= -->
+    <!-- HTML REPRODUTOR DE ÁUDIO E CONTEÚDO PRINCIPAL    -->
+    <!-- ================================================= -->
+    <audio id="musicaPlayer" loop></audio>
+
+    <div class="container">
+        <h1>MEU MUNDO!!!</h1>
+        <p>Criado no dia 23/12/1999.</p>
+        <p>pedaços de mim </p>
+
+        <!-- ENDEREÇO DE EMAIL E FAX -->
+        <p style="font-size: 12px;">
+            Email: <a href="mailto:Death.Brain@yahoo.com.br" style="color: #800080; font-weight: bold;">Death.Brain@yahoo.com.br</a><br>
+            Fax: (555) 123-4567
+        </p>
+
+        <!-- GIF MOVIDO PARA DEPOIS DO EMAIL/FAX -->
+        <p>
+            <img src="funny-dog.gif" alt="Cachorro dançando" style="max-width: 100px;">
+        </p>
+        <!-- FIM DO GIF -->
+
+
+        <!-- Menu de Botões (entre colchetes) -->
+        <div class="menu-lista">
+            [ 
+            <a href="#" class="btn-musica" onclick="toggleMusicMenu(); return false;">
+                🎵 Músicas
+            </a>
+             ]
+            
+            [ 
+            <a href="#minha-foto" class="btn-galeria">
+                📸 Imagem
+            </a> 
+            ]
+        </div>
+    </div>
+    
+    <!-- ================================================= -->
+    <!-- HTML DA CAIXA POP-UP DE MÚSICAS                   -->
+    <!-- ================================================= -->
+    <div id="menu-musica">
+        <strong>Playlist:</strong>
+        <p id="currentTrackName" style="font-size: 10px; margin-top: 5px;">how to sleep.mp3</p>
+        <button onclick="playPauseMusic();" style="font-size: 14px; margin-top: 10px;">▶️ / ⏸️ Play/Pause</button>
+        
+        <hr style="border-color: black; margin: 10px 0;">
+
+        <strong>Escolher Música:</strong>
+        <a href="#" class="playlist-item" onclick="playTrack(0); return false;">1. how to sleep.mp3</a>
+        <a href="#" class="playlist-item" onclick="playTrack(1); return false;">2. Just.mp3</a>
+        <a href="#" class="playlist-item" onclick="playTrack(2); return false;">3. When the Sun Hits.mp3</a>
+
+        <br><br>
+        <a href="#" style="color: black;" onclick="toggleMusicMenu(); return false;">[ Fechar Música ]</a>
+    </div>
+
+    <!-- ================================================= -->
+    <!-- HTML DA CAIXA POP-UP DE FOTOS (Galeria)           -->
+    <!-- ================================================= -->
+    <div id="minha-foto">
+        <h2>Minhas Fotos</h2>
+        
+        <p>
+            <img src="shinji ikari.jpeg" alt="Shinji Ikari" style="max-width: 100%; border: 2px solid white;">
+        </p>
+
+        <p>
+            <img src="_ (1).jpeg" alt="Minha Foto" style="max-width: 100%; border: 2px solid white;">
+        </p>
+        
+        <p>
+            <img src="natal.jpeg" alt="Natal" style="max-width: 100%; border: 2px solid white;">
+        </p>
+
+        <br>
+        <a href="#">[ Fechar Imagem ]</a>
+    </div>
+
+    <div style="height: 1000px;"></div>
+
+    <!-- ================================================= -->
+    <!-- JAVASCRIPT PARA GERENCIAR MÚSICA E MENUS        -->
+    <!-- ================================================= -->
+    <script>
+        var player = document.getElementById('musicaPlayer');
+        var menu = document.getElementById('menu-musica');
+        var trackNameDisplay = document.getElementById('currentTrackName');
+        var playlist = ['how to sleep.mp3', 'Just.mp3', 'When the Sun Hits.mp3'];
+        var currentTrackIndex = 0;
+        var isPlaying = false;
+
+        function toggleMusicMenu() {
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+            } else {
+                menu.style.display = 'none';
+            }
+        }
+
+        function playPauseMusic() {
+            if (isPlaying) {
+                player.pause();
+                isPlaying = false;
+            } else {
+                if (!player.src || player.src === '') {
+                    player.src = playlist[currentTrackIndex];
+                }
+                player.play();
+                isPlaying = true;
+            }
+        }
+        
+        function playTrack(index) {
+            currentTrackIndex = index;
+            player.src = playlist[currentTrackIndex];
+            trackNameDisplay.textContent = playlist[currentTrackIndex];
+            player.play();
+            isPlaying = true;
+        }
+    </script>
+
+</body>
+</html>
